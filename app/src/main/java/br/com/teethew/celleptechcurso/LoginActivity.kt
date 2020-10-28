@@ -34,14 +34,22 @@ class LoginActivity : AppCompatActivity() {
                 edtLoginSenha.error = "Campo obrigatório"
                 edtLoginSenha.requestFocus()
             } else {
+
+                // Criando uma referencia ao Shared Preferences
+                val sharedPrefs = getSharedPreferences("cadastro_$email",Context.MODE_PRIVATE)
+
+                val emailLogin = sharedPrefs.getString("EMAIL", "")
+                val senhaLogin = sharedPrefs.getString("SENHA", "")
+
                 // Verificação do email e senha corretos
-                if (email == "teste@teste.com" && senha == "12345678") {
+                if (email == emailLogin && senha == senhaLogin) {
 
                     // Exibindo uma mensagem usando Toast
                     Toast.makeText(this, "Login efetuado com sucesso", Toast.LENGTH_LONG).show()
 
                     // Abrir MainActivity
                     val mIntent = Intent(this, MainActivity::class.java)
+                    mIntent.putExtra("INTENT_EMAIL", email)
 
                     startActivity(mIntent)
                     finish()
